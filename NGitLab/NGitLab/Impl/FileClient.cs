@@ -1,4 +1,5 @@
 ﻿using NGitLab.Models;
+using System;
 
 namespace NGitLab.Impl
 {
@@ -26,6 +27,12 @@ namespace NGitLab.Impl
         public void Delete(FileDelete file)
         {
             _api.Delete().With(file).Stream(_repoPath + "/files", s => { });
+        }
+
+        public FileData Get(string branch, string filePath)
+        {
+            return _api.Get()
+                       .To<FileData>(_repoPath + String.Format("/files?ref={0}&file_path={1}", branch, filePath));
         }
     }
 }
